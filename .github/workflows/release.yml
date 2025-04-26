@@ -1,0 +1,26 @@
+name: Create Release
+
+on:
+  workflow_run:
+    workflows: ["Build Release"]
+    types:
+      - completed
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ubuntu-latest-binary/*.tar.gz
+            macos-latest-binary/*.tar.gz
+            windows-latest-binary/*.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
