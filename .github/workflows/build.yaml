@@ -2,11 +2,14 @@ name: Build Celestial Bootstrap
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
   release:
     types: [ published ]
+
+permissions:
+  contents: write
 
 jobs:
   build:
