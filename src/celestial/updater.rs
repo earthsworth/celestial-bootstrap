@@ -24,7 +24,7 @@ pub async fn check_update(
 
     // download lunar debugger (if is first run)
     if is_first_run {
-        println!("💡 Seems this is your first time use Celestial, downloading LunarDebugger...");
+        println!("💡 Seems it's your first time use Celestial, downloading LunarDebugger...");
         download_file_with_progress(
             &client,
             "https://lunarclient.top/dl/LunarDebugger-fatjar.jar",

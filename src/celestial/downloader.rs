@@ -34,7 +34,7 @@ pub async fn download_file_with_progress(
     }
 
     tokio::fs::create_dir_all(parent_dir).await?;
-    println!("⬇️ Download to {}", path.display());
+    println!("⬇️ Download {} to {}", url, path.display());
 
     let res = client.head(url).send().await?;
     let total_size = res
