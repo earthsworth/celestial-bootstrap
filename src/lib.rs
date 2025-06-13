@@ -11,6 +11,13 @@ use celestial::error::InternalError;
 
 pub async fn run() -> Result<(), Box<dyn std::error::Error>> {
     println!("🚀 Welcome to Celestial, the FOSS LunarClient Launcher implementation!");
+    println!(
+        "💡 Celestial is completely free and open source software and if you bought Celestial anywhere, you got ripped off!"
+    );
+    println!("💡 Source code is available at https://git.lunarclient.top/CubeWhyMC");
+    println!("♥️ Donate us at https://lunarclient.top/donate");
+    println!("💬 Join our Discord! https://discord.lunarclient.top");
+    println!("✈️ Join our Telegram! https://t.me/earthsworth");
 
     let Some(home) = home_dir() else {
         eprintln!("No home dir detected");
@@ -18,7 +25,7 @@ pub async fn run() -> Result<(), Box<dyn std::error::Error>> {
     };
     let home: std::path::PathBuf = home.join(".cubewhy/lunarcn");
     let celestial_jar_path = &home.join(".bootstrap/celestial.jar");
-    
+
     // check update
     check_update(&home, celestial_jar_path)
         .await
