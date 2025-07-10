@@ -6,6 +6,7 @@ use crate::celestial::{
 };
 
 pub mod celestial;
+pub mod utils;
 
 use celestial::error::InternalError;
 
@@ -42,7 +43,7 @@ pub async fn run() -> Result<(), Box<dyn std::error::Error>> {
         return Err(Box::new(InternalError::new("No java 21 found, please download one. Since Celestial bootstrap doesn't have the feature of downloading Java 21, please download manually. https://www.azul.com/downloads/?version=java-21-lts&package=jdk#zulu
         ")));
     };
-    run_jar(&java_executables, &celestial_jar_path).await?;
+    run_jar(&java_executables, celestial_jar_path).await?;
 
     Ok(())
 }

@@ -7,9 +7,8 @@ use tokio::io::AsyncWriteExt;
 use tokio::sync::Mutex;
 
 use crate::celestial::error::InternalError;
-use crate::celestial::hash::sha256_file_async;
-
-
+use crate::utils;
+use crate::utils::hashing::sha256_file_async;
 
 pub async fn download_file_with_progress(
     client: &Client,
@@ -19,9 +18,7 @@ pub async fn download_file_with_progress(
 ) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     // create dirs
     let Some(parent_dir) = path.parent() else {
-        return Err(Box::new(InternalError::new(
-            "No parent folder found",
-        )));
+        return Err(Box::new(InternalError::new("No parent folder found")));
     };
 
     if let Some(expect_sha256) = &expect_sha256 {
@@ -51,7 +48,7 @@ pub async fn download_file_with_progress(
             .progress_chars("#>-"),
     );
 
-    let mut file = tokio::fs::File::create_new(path).await?;
+    let mut file = utils::file::safe_create_or_open(path).await?;
     let mut stream = client.get(url).send().await?.bytes_stream();
 
     let pb = Arc::new(Mutex::new(pb));
@@ -67,9 +64,7 @@ pub async fn download_file_with_progress(
     if let Some(expect_sha256) = expect_sha256 {
         let hash = sha256_file_async(path).await?;
         if hash != expect_sha256 {
-            return Err(Box::new(InternalError::new(
-                "Hash didn't match",
-            )));
+            return Err(Box::new(InternalError::new("Hash didn't match")));
         }
     }
 

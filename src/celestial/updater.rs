@@ -1,11 +1,11 @@
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use reqwest::Client;
 
 use crate::celestial::downloader::download_file_with_progress;
 
 pub async fn check_update(
-    base_dir: &PathBuf,
+    base_dir: &Path,
     celestial_jar_file: &PathBuf,
 ) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     let is_first_run = !celestial_jar_file.exists();
@@ -14,10 +14,10 @@ pub async fn check_update(
     // download Celestial
     download_file_with_progress(
         &client,
-        "https://lunarclient.top/dl/celestial-3.2.1-SNAPSHOT-fatjar.jar",
+        "https://lunarclient.top/dl/celestial-3.2.1-hotfix.jar",
         celestial_jar_file,
         Some(String::from(
-            "561beb82c97f03efd25b57f502be20a1ffec8ec87c8345bfcc07ad6c0573e678",
+            "382003745e4fc6e34a5f1bd1096468574a89739ba88a9d6465b97edba97b1d30",
         )),
     )
     .await?; // TODO check errors

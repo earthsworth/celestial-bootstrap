@@ -17,5 +17,5 @@ pub async fn sha256_file_async(path: &PathBuf) -> io::Result<String> {
     }
 
     let hash_result = hasher.finalize();
-    Ok(format!("{:x}", hash_result))
+    Ok(format!("{hash_result:x}"))
 }
